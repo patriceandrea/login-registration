@@ -38,6 +38,21 @@ const Register = () => {
     setValidName(result);
   }, [user]);
 
+  // validate the password match 
+  useEffect(() => {
+    const result = PWD_REGEX.test(pwd);
+    console.log(result);
+    console.log(pwd);
+    setValidPwd(result);
+    const match = pwd === matchPwd;
+    setValidMatch(match);
+  }, [pwd, matchPwd])
+
+
+  //error message 
+  useEffect(() => {
+    setErrMsg('');
+  }, [user, pwd, matchPwd]);
 
   return (
     <div>
