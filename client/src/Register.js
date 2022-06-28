@@ -111,10 +111,35 @@ const Register = () => {
         />
         <p id="pwdnote" className={pwdFocus && !validPwd ? "instructions" : "offscreen"}>
           <FontAwesomeIcon icon={faInfoCircle} />
-          4 to 24 characters.<br />
-          Must include  with a letter.
-          Letters, numbers, underscores, hyphens allowed.<br />
+          8 to 24 characters.<br />
+          Must include  uppercase and lowercase letters, a number and a special character. <br />
+          Allowed special characters: <span aria-label="exclamation mark">!</span><span aria-label="at symbol">@</span><span aria-label="hashtag">#</span><span aria-label="dollar sign">$</span><span aria-label="percent">%</span>
         </p>
+        <label htmlFor="confirm_pwd">
+          Confirm Password:
+          <span className={validMatch && matchPwd ? "valid" : "hide"}>
+            <FontAwesomeIcon icon={faCheck} />
+          </span>
+          <span className={validMatch || !matchPwd ? "hide" : "invalid"}>
+            <FontAwesomeIcon icon={faTimes} />
+          </span>
+        </label>
+        <input
+          type="password"
+          id="password"
+          onChange={(e) => setMatchPwd(e.target.value)}
+          required
+          aria-invalid={validPwd ? "false" : "true"}
+          aria-describedby="confirmnote"
+          onFocus={() => setMatchFocus(true)}
+          onBlur={() => setMatchFocus(false)}
+        />
+        <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
+          <FontAwesomeIcon icon={faInfoCircle} />
+          Must Match the first password input field.
+        </p>
+
+        <button disabled={!validName || !validPwd || !validMatch ? true : false}>Sign Up</button>
       </form>
     </section >
   )
