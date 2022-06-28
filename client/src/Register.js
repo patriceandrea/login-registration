@@ -1,10 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-
+import axios from "./api/axios";
+// import { json } from "express";
 
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const REGISTER_URL = '/register';
 
 const Register = () => {
   const userRef = useRef();
@@ -63,8 +65,22 @@ const Register = () => {
       setErrMsg("invalid Entry");
       return;
     }
-    console.log(user, pwd);
-    setSuccess(true);
+    // console.log(user, pwd);
+    // setSuccess(true);
+    try {
+      const response = await axios.post(REGISTER_URL, JSON.stringify({ user, pwd }), {
+        headers: { 'Content-Type': 'aplication/json' },
+        withCredentials: true
+      }
+      );
+      console.log(response.data);
+      console.log(response.accessToken);
+      console.log(JSON.stringify(response));
+      setSuccess(true);
+      //clear input fields
+    } catch (err) {
+
+    }
   };
 
   return (
